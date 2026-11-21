@@ -152,6 +152,12 @@ activemq-data/
 # Environments
 .env
 .envrc
+.cache.sqlite
+*.sqlite
+*.sqlite3
+*.backup*
+yatra_voice_test.mp3
+weather_forecast.csv
 .venv
 env/
 venv/

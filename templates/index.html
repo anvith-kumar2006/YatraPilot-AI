@@ -1,0 +1,1013 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YatraPilot AI — Your Intelligent Travel Companion</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Leaflet for Interactive MapTiler Routing & Transit Hubs -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+</head>
+<body>
+
+<!-- ============================================================
+     NAVIGATION
+============================================================ -->
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <a href="#home" class="nav-logo" onclick="showLanding()">
+            <span class="logo-icon">✈</span>
+            <span class="logo-text">YatraPilot <span class="logo-ai">AI</span></span>
+        </a>
+
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#home" onclick="showLanding()">Home</a></li>
+            <li><a href="#destinations" onclick="showLanding()">Explore Destinations</a></li>
+            <li><a href="#features" onclick="showLanding()">Features</a></li>
+            <li><a href="javascript:void(0)" onclick="showTransportMarketplace()" class="nav-transport-link">🚆 Transport &amp; Rentals</a></li>
+            <li><a href="javascript:void(0)" onclick="showVoiceAssistant()" class="nav-voice-link">🎙 Voice Assistant</a></li>
+            <li><a href="javascript:void(0)" onclick="showTextChat()">💬 Text Chat</a></li>
+        </ul>
+
+        <div class="nav-cta">
+            <button class="btn-nav-cta" onclick="showVoiceAssistant()">
+                <span class="cta-mic-icon">🎙</span>
+                <span>Voice Mode</span>
+            </button>
+        </div>
+
+        <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+
+<!-- ============================================================
+     LANDING PAGE
+============================================================ -->
+<div id="landingPage">
+
+    <!-- HERO SECTION -->
+    <section class="hero" id="home">
+        <div class="hero-bg">
+            <div class="hero-orb hero-orb-1"></div>
+            <div class="hero-orb hero-orb-2"></div>
+            <div class="hero-orb hero-orb-3"></div>
+            <div class="hero-airplane-track">
+                <div class="flying-airplane">✈</div>
+            </div>
+            <div class="hero-particles" id="heroParticles"></div>
+        </div>
+
+        <div class="hero-content">
+            <div class="hero-text-col">
+                <div class="hero-badge">
+                    <span class="badge-dot"></span>
+                    AI-Powered Travel Intelligence
+                </div>
+                <h1 class="hero-headline">
+                    Your Next Journey<br>
+                    <span class="hero-highlight">Starts With AI.</span>
+                </h1>
+                <p class="hero-description">
+                    Discover destinations, plan smarter itineraries and explore the world
+                    with your intelligent AI travel companion.
+                </p>
+                <div class="hero-actions">
+                    <button class="btn-hero-primary" onclick="showVoiceAssistant()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+                        <span>Start Voice Assistant</span>
+                    </button>
+                    <button class="btn-hero-secondary" onclick="showTextChat()">
+                        <span>💬 Text Chat Planner</span>
+                    </button>
+                </div>
+
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">150+</span>
+                        <span class="stat-label">Destinations</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-number">Gemini</span>
+                        <span class="stat-label">AI Intelligence</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-number">Live</span>
+                        <span class="stat-label">Weather &amp; Places</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <div class="hero-card-stack">
+                    <div class="floating-card card-weather">
+                        <div class="fc-icon">🌤</div>
+                        <div class="fc-info">
+                            <div class="fc-title">Goa, India</div>
+                            <div class="fc-sub">28°C · Sunny &amp; Pleasant</div>
+                        </div>
+                    </div>
+                    <div class="floating-card card-itinerary">
+                        <div class="fc-icon">📅</div>
+                        <div class="fc-info">
+                            <div class="fc-title">Day 1 — Arrival</div>
+                            <div class="fc-sub">Baga Beach · Sunset Cruise</div>
+                        </div>
+                    </div>
+                    <div class="floating-card card-budget">
+                        <div class="fc-icon">💰</div>
+                        <div class="fc-info">
+                            <div class="fc-title">Budget Estimate</div>
+                            <div class="fc-sub">₹24,500 for 3 days</div>
+                        </div>
+                    </div>
+                    <div class="floating-card card-rating">
+                        <div class="fc-icon">⭐</div>
+                        <div class="fc-info">
+                            <div class="fc-title">4.9 / 5 Rating</div>
+                            <div class="fc-sub">12,000+ Trips Planned</div>
+                        </div>
+                    </div>
+
+                    <div class="hero-image-container">
+                        <div class="hero-image-placeholder">
+                            <div class="destination-preview">
+                                <div class="dest-sky"></div>
+                                <div class="dest-mountains"></div>
+                                <div class="dest-water"></div>
+                                <div class="dest-overlay">
+                                    <div class="dest-badge-pill">📍 Incredible Journeys</div>
+                                    <span class="dest-name">Explore With Intelligence</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-scroll">
+            <div class="scroll-indicator">
+                <div class="scroll-dot"></div>
+            </div>
+            <span>Scroll to explore</span>
+        </div>
+    </section>
+
+
+    <!-- DESTINATION DISCOVERY -->
+    <section class="destinations-section" id="destinations">
+        <div class="section-container">
+            <div class="section-header">
+                <div class="section-label">Explore the World</div>
+                <h2 class="section-title">Popular Destinations</h2>
+                <p class="section-subtitle">From serene beaches to mountain escapes — discover places worth your next adventure.</p>
+            </div>
+
+            <div class="destinations-grid">
+
+                <div class="dest-card" data-dest="Goa">
+                    <div class="dest-card-image goa-image">
+                        <div class="dest-gradient"></div>
+                        <div class="dest-tag">Beach</div>
+                    </div>
+                    <div class="dest-card-body">
+                        <div class="dest-location">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            India
+                        </div>
+                        <h3 class="dest-name">Goa</h3>
+                        <p class="dest-description">Sun-kissed beaches, vibrant nightlife and Portuguese colonial charm in India's favourite coastal state.</p>
+                        <button class="dest-explore-btn" onclick="startChat('Plan a trip to Goa for 5 days')">
+                            Plan Trip
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="dest-card" data-dest="Rajasthan">
+                    <div class="dest-card-image rajasthan-image">
+                        <div class="dest-gradient"></div>
+                        <div class="dest-tag">Heritage</div>
+                    </div>
+                    <div class="dest-card-body">
+                        <div class="dest-location">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            India
+                        </div>
+                        <h3 class="dest-name">Rajasthan</h3>
+                        <p class="dest-description">Majestic forts, royal palaces and vivid desert landscapes across the Land of Kings.</p>
+                        <button class="dest-explore-btn" onclick="startChat('Plan a trip to Rajasthan for 7 days')">
+                            Plan Trip
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="dest-card" data-dest="Kerala">
+                    <div class="dest-card-image kerala-image">
+                        <div class="dest-gradient"></div>
+                        <div class="dest-tag">Nature</div>
+                    </div>
+                    <div class="dest-card-body">
+                        <div class="dest-location">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            India
+                        </div>
+                        <h3 class="dest-name">Kerala</h3>
+                        <p class="dest-description">Tranquil backwaters, spice plantations and lush hill stations in God's Own Country.</p>
+                        <button class="dest-explore-btn" onclick="startChat('Plan a trip to Kerala for 6 days')">
+                            Plan Trip
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="dest-card" data-dest="Ladakh">
+                    <div class="dest-card-image ladakh-image">
+                        <div class="dest-gradient"></div>
+                        <div class="dest-tag">Adventure</div>
+                    </div>
+                    <div class="dest-card-body">
+                        <div class="dest-location">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            India
+                        </div>
+                        <h3 class="dest-name">Ladakh</h3>
+                        <p class="dest-description">High-altitude desert, ancient monasteries and some of the world's most dramatic mountain roads.</p>
+                        <button class="dest-explore-btn" onclick="startChat('Plan a trip to Ladakh for 8 days')">
+                            Plan Trip
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="dest-card" data-dest="Coorg">
+                    <div class="dest-card-image coorg-image">
+                        <div class="dest-gradient"></div>
+                        <div class="dest-tag">Hill Station</div>
+                    </div>
+                    <div class="dest-card-body">
+                        <div class="dest-location">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            India
+                        </div>
+                        <h3 class="dest-name">Coorg</h3>
+                        <p class="dest-description">Rolling coffee estates, misty valleys and cascading waterfalls in Karnataka's Scotland.</p>
+                        <button class="dest-explore-btn" onclick="startChat('Plan a trip to Coorg for 3 days')">
+                            Plan Trip
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="dest-card" data-dest="Shimla">
+                    <div class="dest-card-image shimla-image">
+                        <div class="dest-gradient"></div>
+                        <div class="dest-tag">Mountains</div>
+                    </div>
+                    <div class="dest-card-body">
+                        <div class="dest-location">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            India
+                        </div>
+                        <h3 class="dest-name">Shimla</h3>
+                        <p class="dest-description">Colonial hill town with panoramic Himalayan views, toy-train rides and cool mountain air.</p>
+                        <button class="dest-explore-btn" onclick="startChat('Plan a trip to Shimla for 4 days')">
+                            Plan Trip
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- AI FEATURES SECTION -->
+    <section class="features-section" id="features">
+        <div class="section-container">
+            <div class="section-header">
+                <div class="section-label">Powered by AI</div>
+                <h2 class="section-title">Everything You Need to Plan Smarter</h2>
+                <p class="section-subtitle">Real-time intelligence, beautiful itineraries and conversational AI — all in one place.</p>
+            </div>
+
+            <div class="features-grid">
+
+                <div class="feature-card feature-card-primary">
+                    <div class="feature-icon-wrap">
+                        <span class="feature-icon">📅</span>
+                    </div>
+                    <h3 class="feature-title">AI Itinerary Generation</h3>
+                    <p class="feature-desc">Get a fully planned day-by-day itinerary in seconds. Tell the AI your destination, duration and preferences — it does the rest.</p>
+                    <div class="feature-tag">Powered by Gemini 2.5</div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon-wrap">
+                        <span class="feature-icon">🌤</span>
+                    </div>
+                    <h3 class="feature-title">Real-Time Weather</h3>
+                    <p class="feature-desc">Live weather forecasts integrated directly into your trip planning — so you always pack the right gear.</p>
+                    <div class="feature-tag">Open-Meteo API</div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon-wrap">
+                        <span class="feature-icon">🗺</span>
+                    </div>
+                    <h3 class="feature-title">Nearby Attraction Discovery</h3>
+                    <p class="feature-desc">Find museums, temples, restaurants and hidden gems near any location using live place data.</p>
+                    <div class="feature-tag">Geoapify Places</div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon-wrap">
+                        <span class="feature-icon">💰</span>
+                    </div>
+                    <h3 class="feature-title">Budget Estimation</h3>
+                    <p class="feature-desc">Get detailed budget breakdowns covering accommodation, meals, activities and transport — tailored to your travel style.</p>
+                    <div class="feature-tag">Budget · Mid · Luxury</div>
+                </div>
+
+                <div class="feature-card feature-card-voice">
+                    <div class="feature-icon-wrap">
+                        <span class="feature-icon">🎙</span>
+                    </div>
+                    <h3 class="feature-title">Voice Travel Assistant</h3>
+                    <p class="feature-desc">Talk to your AI travel companion just like a friend. Ask questions, refine itineraries and get recommendations — all by voice.</p>
+                    <div class="feature-tag">Agora Conversational AI</div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon-wrap">
+                        <span class="feature-icon">✅</span>
+                    </div>
+                    <h3 class="feature-title">Trip Approval & Storage</h3>
+                    <p class="feature-desc">Review your itinerary before saving. Human-in-the-loop approval ensures you stay in control of every trip.</p>
+                    <div class="feature-tag">Neon PostgreSQL</div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- CTA SECTION -->
+    <section class="cta-section">
+        <div class="cta-container">
+            <div class="cta-content">
+                <h2 class="cta-title">Ready to Plan Your Dream Trip?</h2>
+                <p class="cta-subtitle">Start a conversation with your AI travel companion now. No sign-up required.</p>
+                <button class="btn-cta-main" onclick="showAssistant()">
+                    <span>Start Planning for Free</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+            <div class="cta-visual">
+                <div class="cta-orb"></div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <span class="logo-icon">✈</span>
+                    <span>YatraPilot <strong>AI</strong></span>
+                </div>
+                <p class="footer-tagline">Your intelligent AI travel companion. Plan smarter, explore further.</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-col">
+                    <h4>Explore</h4>
+                    <ul>
+                        <li><a href="#destinations">Destinations</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#assistant" onclick="showAssistant()">AI Assistant</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Tools</h4>
+                    <ul>
+                        <li><a href="#" onclick="startChat('What is the weather in Goa?')">Weather Check</a></li>
+                        <li><a href="#" onclick="startChat('Find tourist attractions near Mumbai')">Find Attractions</a></li>
+                        <li><a href="#" onclick="startChat('Estimate budget for a 5 day trip to Rajasthan for 2 people')">Budget Planner</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 YatraPilot AI · Built with Gemini 2.5 Flash, Open-Meteo &amp; Geoapify</p>
+        </div>
+    </footer>
+
+</div><!-- end #landingPage -->
+
+
+<!-- ============================================================
+     DEDICATED VOICE-FIRST ASSISTANT (CENTERED EXPERIENCE)
+============================================================ -->
+<div id="voicePage" style="display:none;">
+    <div class="voice-experience-wrapper">
+
+        <!-- Voice Top Bar -->
+        <header class="voice-topbar">
+            <div class="voice-brand" onclick="showLanding()">
+                <span class="voice-brand-icon">✈</span>
+                <span class="voice-brand-title">YatraPilot <span class="voice-brand-accent">Voice AI</span></span>
+                <span class="voice-model-pill">Murf Falcon 2.1</span>
+            </div>
+
+            <div class="voice-topbar-actions">
+                <button class="btn-voice-header" id="btnSpeakerToggle" onclick="toggleSpeakerMute()" title="Mute/Unmute audio">
+                    <svg id="iconSpeakerOn" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
+                    </svg>
+                    <svg id="iconSpeakerMuted" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                        <line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>
+                    </svg>
+                    <span id="speakerLabel">Audio On</span>
+                </button>
+
+                <button class="btn-voice-header" onclick="showTextChat()" title="Switch to text chat">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                    <span>Text Chat</span>
+                </button>
+
+                <button class="btn-voice-header btn-exit-voice" onclick="endVoiceConversation()" title="End voice conversation">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                    <span>End Call</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Centered Voice Content Canvas -->
+        <main class="voice-center-canvas">
+            <div class="voice-center-card">
+
+                <!-- Header & Live Status -->
+                <div class="voice-center-header">
+                    <div class="voice-status-pill" id="voiceStatusBadge">
+                        <span class="status-indicator-dot" id="voiceStatusDot"></span>
+                        <span id="voiceStatusText">Ready · Tap microphone to speak</span>
+                    </div>
+                    <h1 class="voice-assistant-title">Your AI Travel Concierge</h1>
+                    <p class="voice-greeting-caption" id="voiceGreetingCaption">
+                        Hi, I'm YatraPilot! Ask me anything about destinations, weather, budgets or itineraries.
+                    </p>
+                </div>
+
+                <!-- Central Visualizer & Orb -->
+                <div class="voice-visualizer-stage">
+                    <div class="voice-orb-glow" id="voiceOrbGlow"></div>
+                    <div class="central-voice-orb" id="centralVoiceOrb">
+                        <div class="orb-inner-wave"></div>
+                        <div class="orb-core">
+                            <span class="orb-icon" id="orbCenterIcon">🎙</span>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Equalizer Bars -->
+                    <div class="voice-equalizer-bars" id="voiceEqualizerBars">
+                        <span></span><span></span><span></span><span></span>
+                        <span></span><span></span><span></span><span></span>
+                        <span></span><span></span><span></span><span></span>
+                        <span></span><span></span><span></span><span></span>
+                    </div>
+
+                    <!-- Live Recording Duration & Feedback -->
+                    <div class="voice-stage-meta">
+                        <div class="voice-welcome-countdown" id="voiceWelcomeCountdown" style="display:none;">
+                            <span class="vcount-dot"></span>
+                            <span id="voiceCountdownText">Starting voice greeting in 3s...</span>
+                        </div>
+                        <div class="voice-silence-countdown" id="voiceSilenceCountdown" style="display:none;">
+                            <span class="silence-pulse-dot"></span>
+                            <span id="silenceCountdownText">Silence detected · Sending in 5s...</span>
+                        </div>
+                        <div class="voice-duration-counter" id="voiceDurationCounter" style="display:none;">0:00</div>
+                        <div class="voice-live-feedback" id="voiceLiveFeedback"></div>
+                    </div>
+                </div>
+
+                <!-- Interactive State Controls -->
+                <div class="voice-controls-section" id="voiceControlsSection">
+
+                    <!-- 0. WELCOME / INITIALIZING STATE (3s Auto Greeting Countdown) -->
+                    <div class="vstate-box vstate-welcome" id="vStateWelcome" style="display:none;">
+                        <div class="voice-welcome-pulse-ring"></div>
+                        <span class="vstate-caption" id="voiceWelcomeCaption">Welcome! Initializing AI travel agent in 3s...</span>
+                    </div>
+
+                    <!-- 1. IDLE STATE -->
+                    <div class="vstate-box" id="vStateIdle">
+                        <button class="btn-center-mic" id="btnCenterMic" onclick="startVoiceRecording()" title="Start speaking">
+                            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                                <line x1="12" y1="19" x2="12" y2="23"/>
+                                <line x1="8" y1="23" x2="16" y2="23"/>
+                            </svg>
+                        </button>
+                        <span class="vstate-caption">Tap to speak with YatraPilot</span>
+                    </div>
+
+                    <!-- 2. RECORDING STATE -->
+                    <div class="vstate-box" id="vStateRecording" style="display:none;">
+                        <button class="btn-center-stop" id="btnCenterStop" onclick="stopVoiceRecording()">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <rect x="5" y="5" width="14" height="14" rx="3"/>
+                            </svg>
+                            <span>Stop Recording</span>
+                        </button>
+                        <span class="vstate-caption">Listening to your travel query...</span>
+                    </div>
+
+                    <!-- 3. PREVIEW & EDIT STATE -->
+                    <div class="vstate-box vstate-preview" id="vStatePreview" style="display:none;">
+                        <div class="preview-badge-row">
+                            <span class="preview-tag">Recognized Speech</span>
+                            <span class="editable-tag">✏ Editable Preview</span>
+                        </div>
+                        <textarea class="voice-transcript-input" id="voiceTranscriptInput" placeholder="Your speech will appear here... Edit if needed before sending."></textarea>
+                        <div class="preview-actions-row">
+                            <button class="btn-voice-send" id="btnVoiceSendQuery" onclick="sendVoiceTranscript()">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                                </svg>
+                                <span>Send to YatraPilot</span>
+                            </button>
+                            <button class="btn-voice-retry" id="btnVoiceRetryQuery" onclick="recordAgain()">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M23 4v6h-6M1 20v-6h6"/>
+                                    <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+                                </svg>
+                                <span>Record Again</span>
+                            </button>
+                            <button class="btn-voice-cancel" onclick="cancelVoiceRecording()">Cancel</button>
+                        </div>
+                    </div>
+
+                    <!-- 4. PROCESSING STATE -->
+                    <div class="vstate-box" id="vStateProcessing" style="display:none;">
+                        <div class="voice-processing-spinner"></div>
+                        <span class="vstate-caption">Consulting Gemini &amp; travel intelligence...</span>
+                    </div>
+
+                    <!-- 5. SPEAKING STATE (Murf Audio Playing) -->
+                    <div class="vstate-box vstate-speaking" id="vStateSpeaking" style="display:none;">
+                        <div class="speaking-actions-row">
+                            <button class="btn-stop-audio" id="btnStopMurfAudio" onclick="stopMurfAudio()">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                    <rect x="6" y="6" width="12" height="12" rx="2"/>
+                                </svg>
+                                <span>Stop Audio</span>
+                            </button>
+                            <button class="btn-ask-another" id="btnAskAnotherVoice" onclick="startVoiceRecording()">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                                    <line x1="12" y1="19" x2="12" y2="23"/>
+                                    <line x1="8" y1="23" x2="16" y2="23"/>
+                                </svg>
+                                <span>Ask Next Question</span>
+                            </button>
+                            <button class="btn-view-transcript" id="btnToggleTranscript" onclick="toggleSpokenTranscript()">
+                                <span>Show Transcript</span>
+                            </button>
+                        </div>
+                        <div class="spoken-transcript-card" id="voiceSpokenTranscriptBox" style="display:none;">
+                            <p id="voiceSpokenTranscriptText"></p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Voice Dialogue Stream (Live Conversation & AI Spoken Messages) -->
+                <div class="voice-dialogue-stream" id="voiceDialogueStream">
+                    <!-- Dialogue bubbles inserted dynamically -->
+                </div>
+
+                <!-- Quick Prompts Chips -->
+                <div class="voice-quick-prompts">
+                    <span class="quick-prompts-hint">Or try asking:</span>
+                    <div class="voice-chips-row">
+                        <button class="vchip" onclick="submitVoicePreset('Plan a 3-day trip to Goa')">🏖 3 days in Goa</button>
+                        <button class="vchip" onclick="submitVoicePreset('What is the weather in Shimla right now?')">🌤 Shimla weather</button>
+                        <button class="vchip" onclick="submitVoicePreset('Find top attractions in Kerala')">🗺 Kerala attractions</button>
+                        <button class="vchip" onclick="submitVoicePreset('Estimate budget for 5 days in Rajasthan for 2 people')">💰 Rajasthan budget</button>
+                    </div>
+                </div>
+
+                <!-- End Call Footer Pill -->
+                <div class="voice-center-footer">
+                    <button class="btn-end-session-pill" onclick="endVoiceConversation()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M10.68 13.31a16 16 0 0 0 3.41 2.6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7 2 2 0 0 1 1.72 2v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07C8.44 17.5 6.5 15.56 5.14 13.37A19.79 19.79 0 0 1 2.07 4.74 2 2 0 0 1 4.05 2.57l3-.01a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 10.3"/>
+                            <line x1="23" y1="1" x2="1" y2="23"/>
+                        </svg>
+                        <span>End Voice Session</span>
+                    </button>
+                </div>
+
+            </div>
+        </main>
+    </div>
+</div>
+
+
+<!-- ============================================================
+     TEXT CHAT ASSISTANT PAGE (STANDALONE TEXT MODE)
+============================================================ -->
+<div id="assistantPage" style="display:none;">
+
+    <div class="assistant-layout">
+
+        <!-- Sidebar (Pure Text Navigation — NO sidebar voice recorder) -->
+        <aside class="assistant-sidebar">
+            <div class="sidebar-header">
+                <button class="btn-back" onclick="showLanding()">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Back to Home
+                </button>
+            </div>
+
+            <div class="sidebar-ai-status">
+                <div class="ai-avatar">
+                    <span>✈</span>
+                    <span class="ai-online-dot" id="aiOnlineDot"></span>
+                </div>
+                <div class="ai-info">
+                    <div class="ai-name">YatraPilot AI</div>
+                    <div class="ai-status-text" id="aiStatusText">Connecting...</div>
+                </div>
+            </div>
+
+            <!-- Voice Mode Switcher Card -->
+            <div class="sidebar-voice-shortcut">
+                <div class="svc-header">
+                    <div class="svc-icon">🎙</div>
+                    <div>
+                        <div class="svc-title">Voice Mode</div>
+                        <div class="svc-sub">Murf Falcon 2.1 Real Voice</div>
+                    </div>
+                </div>
+                <button class="btn-svc-switch" onclick="showVoiceAssistant()">
+                    <span>Open Voice Assistant</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+
+            <div class="sidebar-quick-prompts">
+                <div class="quick-prompts-label">Quick Prompts</div>
+                <button class="quick-prompt-btn" onclick="sendQuickPrompt('Plan a 5-day trip to Goa for 2 people')">🏖 Goa 5-day trip</button>
+                <button class="quick-prompt-btn" onclick="sendQuickPrompt('What is the weather in Rajasthan right now?')">🌤 Rajasthan weather</button>
+                <button class="quick-prompt-btn" onclick="sendQuickPrompt('Find top attractions in Kerala')">🗺 Kerala attractions</button>
+                <button class="quick-prompt-btn" onclick="sendQuickPrompt('Estimate budget for 3 days in Shimla for 2 people')">💰 Budget estimator</button>
+                <button class="quick-prompt-btn" onclick="sendQuickPrompt('Generate a 7-day Ladakh itinerary starting 2026-12-01')">📅 Ladakh itinerary</button>
+            </div>
+        </aside>
+
+        <!-- Chat Area -->
+        <main class="chat-main">
+            <div class="chat-topbar">
+                <div class="chat-topbar-info">
+                    <h2>AI Travel Concierge — Text Chat</h2>
+                    <span class="chat-topbar-sub">Ask about destinations, itineraries, weather and budgets</span>
+                </div>
+                <div class="chat-topbar-actions">
+                    <button class="btn-voice-shortcut-top" onclick="showVoiceAssistant()" title="Open Voice Assistant">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>
+                        <span>Voice Mode</span>
+                    </button>
+                    <button class="btn-clear-chat" onclick="clearChat()" title="Clear conversation">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                        Clear
+                    </button>
+                </div>
+            </div>
+
+            <div class="chat-messages" id="chatMessages">
+                <!-- Welcome message inserted by JS -->
+            </div>
+
+            <div class="chat-input-area">
+                <div class="chat-input-wrapper">
+                    <textarea
+                        id="chatInput"
+                        class="chat-textarea"
+                        placeholder="Ask about destinations, weather, attractions, budgets or itineraries..."
+                        rows="1"
+                        autocomplete="off"
+                    ></textarea>
+                    <button class="btn-send" id="sendBtn" onclick="sendMessage()" aria-label="Send message">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    </button>
+                </div>
+                <div class="chat-input-hint">Press <kbd>Enter</kbd> to send · <kbd>Shift+Enter</kbd> for new line</div>
+            </div>
+        </main>
+
+    </div><!-- end assistant-layout -->
+
+</div><!-- end #assistantPage -->
+
+
+<!-- ============================================================
+     TRANSPORTATION & MOBILITY MARKETPLACE
+============================================================ -->
+<div id="transportPage" style="display:none;">
+    <div class="transport-page-container">
+
+        <!-- Hero Header -->
+        <header class="transport-hero">
+            <div class="transport-hero-badge">
+                <span class="transport-badge-icon">🌐</span>
+                <span>Intercity Mobility &amp; Provider Marketplace</span>
+                <span class="transport-badge-pill">7 Modes Supported</span>
+            </div>
+            <h1 class="transport-title">Explore Routes, Schedules &amp; Verified Travel Operators</h1>
+            <p class="transport-subtitle">
+                Compare intercity buses, express trains, flights, outstation cabs, rentals, and group tempo travellers across India.
+                Powered by OSRM &amp; OpenStreetMap routing, India GTFS public transit feeds &amp; verified Neon DB operator networks.
+            </p>
+            <div class="transport-hero-actions-row">
+                <button class="btn-api-matrix-pill" id="btnApiMatrixPill" onclick="toggleApiMatrixModal()">
+                    <span class="api-live-pulse-dot"></span>
+                    <span>API Status &amp; Integration Matrix</span>
+                    <span class="api-chip-badge">13 Services</span>
+                </button>
+                <button class="btn-neon-fleet-pill" onclick="filterTransportCategory('registered_fleet')">
+                    <span>🏢 Neon DB Fleet: 5 Verified Operators</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Search & Filter Card -->
+        <div class="transport-search-card">
+            <div class="transport-search-grid">
+                <div class="transport-input-group">
+                    <label for="transportOrigin"><span class="input-icon">📍</span> Origin City</label>
+                    <input type="text" id="transportOrigin" list="indianCities" placeholder="e.g. Delhi, Mumbai, Bengaluru..." value="Delhi" autocomplete="off">
+                </div>
+
+                <div class="transport-swap-col">
+                    <button type="button" class="btn-swap-route" id="btnSwapRoute" onclick="swapTransportRoute()" title="Swap Origin and Destination">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M7 16V4m0 0L3 8m4-4l4 4m6 4v12m0 0l4-4m-4 4l-4-4"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="transport-input-group">
+                    <label for="transportDest"><span class="input-icon">🏁</span> Destination City</label>
+                    <input type="text" id="transportDest" list="indianCities" placeholder="e.g. Jaipur, Goa, Agra, Manali..." value="Jaipur" autocomplete="off">
+                </div>
+
+                <div class="transport-input-group">
+                    <label for="transportDate"><span class="input-icon">📅</span> Travel Date</label>
+                    <input type="date" id="transportDate">
+                </div>
+
+                <div class="transport-input-group">
+                    <label for="transportPassengers"><span class="input-icon">👥</span> Group Size</label>
+                    <select id="transportPassengers">
+                        <option value="1">1 Passenger (Solo)</option>
+                        <option value="2">2 Passengers (Couple)</option>
+                        <option value="4">4 Passengers (Family / Cab)</option>
+                        <option value="6">6 Passengers (SUV / Ertiga)</option>
+                        <option value="12" selected>12 Passengers (12-Seater Tempo Traveller)</option>
+                        <option value="17">17 Passengers (17-Seater Force Urbania)</option>
+                        <option value="26">26 Passengers (26-Seater Mini Coach)</option>
+                    </select>
+                </div>
+
+                <div class="transport-input-group transport-submit-group">
+                    <button class="btn-transport-search" id="btnTransportSearch" onclick="triggerTransportSearch()">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                        </svg>
+                        <span>Search Transport</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Indian Cities Datalist -->
+            <datalist id="indianCities">
+                <option value="Delhi">
+                <option value="Jaipur">
+                <option value="Agra">
+                <option value="Mumbai">
+                <option value="Goa">
+                <option value="Bengaluru">
+                <option value="Chennai">
+                <option value="Kolkata">
+                <option value="Hyderabad">
+                <option value="Pune">
+                <option value="Manali">
+                <option value="Shimla">
+                <option value="Leh">
+                <option value="Varanasi">
+                <option value="Kochi">
+                <option value="Udaipur">
+                <option value="Amritsar">
+                <option value="Rishikesh">
+            </datalist>
+
+            <!-- Category Filter Pills -->
+            <div class="transport-category-pills" id="transportCategoryPills">
+                <button class="tpill active" data-category="all" onclick="filterTransportCategory('all')">
+                    <span class="tpill-icon">✨</span>
+                    <span>All Options</span>
+                    <span class="tpill-count" id="countAll">16</span>
+                </button>
+                <button class="tpill" data-category="bus" onclick="filterTransportCategory('bus')">
+                    <span class="tpill-icon">🚌</span>
+                    <span>Buses</span>
+                    <span class="tpill-count" id="countBus">2</span>
+                </button>
+                <button class="tpill" data-category="train" onclick="filterTransportCategory('train')">
+                    <span class="tpill-icon">🚆</span>
+                    <span>Trains</span>
+                    <span class="tpill-count" id="countTrain">2</span>
+                </button>
+                <button class="tpill" data-category="flight" onclick="filterTransportCategory('flight')">
+                    <span class="tpill-icon">✈️</span>
+                    <span>Flights</span>
+                    <span class="tpill-count" id="countFlight">2</span>
+                </button>
+                <button class="tpill" data-category="taxi" onclick="filterTransportCategory('taxi')">
+                    <span class="tpill-icon">🚖</span>
+                    <span>Outstation Cabs</span>
+                    <span class="tpill-count" id="countTaxi">2</span>
+                </button>
+                <button class="tpill" data-category="car_rental" onclick="filterTransportCategory('car_rental')">
+                    <span class="tpill-icon">🚗</span>
+                    <span>Car Rentals</span>
+                    <span class="tpill-count" id="countCarRental">2</span>
+                </button>
+                <button class="tpill" data-category="tempo_traveller" onclick="filterTransportCategory('tempo_traveller')">
+                    <span class="tpill-icon">🚐</span>
+                    <span>Tempo Travellers (12-26 Seater)</span>
+                    <span class="tpill-count" id="countTempo">3</span>
+                </button>
+                <button class="tpill" data-category="private_coach" onclick="filterTransportCategory('private_coach')">
+                    <span class="tpill-icon">🛋️</span>
+                    <span>Luxury Coaches</span>
+                    <span class="tpill-count" id="countCoach">2</span>
+                </button>
+                <button class="tpill tpill-neon" data-category="registered_fleet" onclick="filterTransportCategory('registered_fleet')">
+                    <span class="tpill-icon">🏢</span>
+                    <span>Registered Fleet (Neon DB)</span>
+                    <span class="tpill-count" id="countRegistered">5</span>
+                </button>
+                <button class="tpill tpill-gtfs" id="tpillGtfs" onclick="toggleGtfsFeedsTab()">
+                    <span class="tpill-icon">📊</span>
+                    <span>Public GTFS Feeds</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Interactive Map & Route Summary Section -->
+        <div class="transport-route-section">
+            <div class="route-summary-ribbon" id="routeSummaryRibbon">
+                <div class="route-metric">
+                    <span class="metric-label">Route</span>
+                    <span class="metric-val" id="metricRoute">Delhi ➔ Jaipur</span>
+                </div>
+                <div class="route-metric">
+                    <span class="metric-label">Driving Distance</span>
+                    <span class="metric-val" id="metricDistance">~280 km</span>
+                </div>
+                <div class="route-metric">
+                    <span class="metric-label">Estimated Drive Time</span>
+                    <span class="metric-val" id="metricDuration">~4h 45m</span>
+                </div>
+                <div class="route-metric">
+                    <span class="metric-label">Routing Engine</span>
+                    <span class="metric-val engine-tag" id="metricEngine">MapTiler &amp; OSRM</span>
+                </div>
+                <div class="route-metric">
+                    <span class="metric-label">Transit Hubs</span>
+                    <span class="metric-val" id="metricHubs">ISBT Kashmere Gate ➔ Sindhi Camp</span>
+                </div>
+            </div>
+
+            <!-- Leaflet Map Container -->
+            <div class="transport-map-wrapper">
+                <div id="transportMap" class="transport-map"></div>
+                <div class="map-overlay-badge">
+                    <span class="map-live-dot"></span>
+                    <span id="mapAttributionText">MapTiler &amp; OpenStreetMap Interactive Navigation</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- GTFS & Public Transit Drawer (Toggleable) -->
+        <div class="gtfs-feeds-drawer" id="gtfsFeedsDrawer" style="display:none;">
+            <div class="feeds-header">
+                <div class="feeds-title-group">
+                    <span class="feeds-icon">📊</span>
+                    <h3>Official Public Transit &amp; GTFS Open Data Feeds</h3>
+                </div>
+                <button class="btn-close-feeds" onclick="hideGtfsFeedsTab()">&times;</button>
+            </div>
+            <p class="feeds-sub">Direct integration with official open transit data catalogs including India GTFS &amp; Mobility Database. Real schedules, routes, and stops without fake booking claims.</p>
+            <div class="feeds-grid" id="gtfsFeedsGrid">
+                <!-- Dynamically loaded from /api/transport/feeds -->
+            </div>
+        </div>
+
+        <!-- API Matrix Drawer (Toggleable) -->
+        <div class="api-matrix-drawer" id="apiMatrixDrawer" style="display:none;">
+            <div class="feeds-header">
+                <div class="feeds-title-group">
+                    <span class="feeds-icon">🛰️</span>
+                    <h3>Transportation Integrations &amp; API Availability Matrix</h3>
+                </div>
+                <button class="btn-close-feeds" onclick="toggleApiMatrixModal()">&times;</button>
+            </div>
+            <p class="feeds-sub">Live audit of all 13 evaluated transit, routing, database, and commercial provider integrations. Authentic data feeds only — no simulated bookings.</p>
+            <div class="matrix-summary-chips" id="matrixSummaryChips">
+                <!-- Dynamically loaded summary counts -->
+            </div>
+            <div class="matrix-table-wrap">
+                <table class="matrix-table" id="matrixTable">
+                    <thead>
+                        <tr>
+                            <th>Service</th>
+                            <th>Category</th>
+                            <th>Status</th>
+                            <th>Integration Type</th>
+                            <th>Operational Capabilities &amp; Fallbacks</th>
+                        </tr>
+                    </thead>
+                    <tbody id="matrixTableBody">
+                        <!-- Populated by JavaScript from /api/transport/availability -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Results Marketplace Grid Section -->
+        <div class="transport-results-section">
+            <div class="results-header-bar">
+                <div class="results-title-group">
+                    <h2 class="results-title">Available Transport &amp; Rental Options</h2>
+                    <span class="results-subtitle" id="resultsSub">Showing verified providers, pricing estimates &amp; vehicle configurations</span>
+                </div>
+                <div class="results-sort-bar">
+                    <label for="transportSort">Sort by:</label>
+                    <select id="transportSort" onchange="sortTransportResults()">
+                        <option value="recommended">Recommended</option>
+                        <option value="price_asc">Price: Low to High</option>
+                        <option value="capacity_desc">Capacity: High to Low</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="transport-cards-grid" id="transportResultsGrid">
+                <!-- Filled dynamically by JavaScript -->
+            </div>
+        </div>
+
+    </div>
+</div><!-- end #transportPage -->
+
+
+<!-- Approval Modal -->
+<div class="modal-overlay" id="approvalModal" style="display:none;">
+    <div class="modal-card">
+        <div class="modal-icon">✅</div>
+        <h3 class="modal-title">Save Your Trip?</h3>
+        <p class="modal-body" id="approvalModalBody">Would you like to save this trip to your itinerary?</p>
+        <div class="modal-actions">
+            <button class="btn-modal-approve" onclick="handleApproval(true)">Yes, Save Trip</button>
+            <button class="btn-modal-reject" onclick="handleApproval(false)">Not Now</button>
+        </div>
+    </div>
+</div>
+
+
+<script src="/static/js/app.js"></script>
+</body>
+</html>
